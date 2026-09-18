@@ -1,0 +1,1380 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Đề trắc nghiệm 20 câu về đạo hàm của hàm ẩn, có phản hồi tức thì và lời giải chi tiết.">
+  <meta name="theme-color" content="#09243d">
+  <title>Đạo hàm hàm ẩn — Đề trắc nghiệm 20 câu</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2309243d'/%3E%3Cpath d='M15 18h11c9 0 14 5 14 14s-5 14-14 14H15V18Zm10 7h-3v14h3c5 0 8-2 8-7s-3-7-8-7Z' fill='%23fff'/%3E%3Cpath d='M43 17h6l-4 30h-6l4-30Z' fill='%2338d3c5'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #102436;
+      --muted: #66798a;
+      --navy: #09243d;
+      --navy-2: #123b5e;
+      --teal: #12a99a;
+      --teal-soft: #e5f8f5;
+      --blue: #2d6cdf;
+      --blue-soft: #ebf2ff;
+      --amber: #f3a712;
+      --amber-soft: #fff6dd;
+      --violet: #6d55d9;
+      --violet-soft: #f0edff;
+      --green: #12805c;
+      --green-soft: #e6f7ef;
+      --red: #c53f4b;
+      --red-soft: #fff0f1;
+      --paper: #f7fafc;
+      --line: #dce6ed;
+      --white: #ffffff;
+      --shadow: 0 18px 50px rgba(20, 54, 82, 0.10);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(rgba(25, 74, 108, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(25, 74, 108, 0.035) 1px, transparent 1px);
+      background-size: 28px 28px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    button { font: inherit; }
+
+    button:focus-visible {
+      outline: 3px solid rgba(45, 108, 223, 0.30);
+      outline-offset: 3px;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 310px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      color: #eef7fb;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(56, 211, 197, 0.16), transparent 26%),
+        linear-gradient(160deg, var(--navy) 0%, #061827 100%);
+      padding: 30px 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 30px;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 auto;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      color: var(--navy);
+      background: #38d3c5;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.22rem;
+      font-weight: 800;
+      box-shadow: 0 8px 22px rgba(56, 211, 197, 0.20);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.04rem;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .brand p {
+      margin: 3px 0 0;
+      color: #9eb5c5;
+      font-size: 0.82rem;
+    }
+
+    .score-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 15px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(8px);
+    }
+
+    .score-card div { min-width: 0; }
+    .score-card span {
+      display: block;
+      color: #9eb5c5;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .score-card strong {
+      display: block;
+      margin-top: 2px;
+      color: #ffffff;
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .nav-group { margin: 0 0 20px; }
+
+    .nav-group-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 9px;
+      color: #b8cbd7;
+      font-size: 0.82rem;
+      font-weight: 750;
+    }
+
+    .nav-group-title small { color: #7794a8; font-size: 0.75rem; }
+
+    .question-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+    }
+
+    .q-nav {
+      width: 100%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 9px;
+      color: #d8e5ed;
+      background: rgba(255,255,255,0.06);
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 750;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease;
+    }
+
+    .q-nav:hover { transform: translateY(-1px); background: rgba(255,255,255,0.12); }
+    .q-nav.current { border-color: #38d3c5; box-shadow: 0 0 0 2px rgba(56,211,197,.18); }
+    .q-nav.correct { color: #ffffff; border-color: #20a878; background: #16805f; }
+    .q-nav.incorrect { color: #ffffff; border-color: #d65b66; background: #b93d49; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      padding-top: 4px;
+      color: #9eb5c5;
+      font-size: 0.76rem;
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .legend i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+    .reset-button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 12px;
+      color: #d7e6ee;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 720;
+    }
+
+    .reset-button:hover { background: rgba(255,255,255,0.08); }
+
+    .main {
+      min-width: 0;
+      padding: 36px clamp(24px, 5vw, 72px) 54px;
+    }
+
+    .topbar {
+      max-width: 980px;
+      margin: 0 auto 24px;
+      display: flex;
+      gap: 22px;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .eyebrow {
+      margin: 0 0 5px;
+      color: var(--blue);
+      font-size: 0.79rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .topbar h2 {
+      margin: 0;
+      color: var(--navy);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.75rem, 3vw, 2.55rem);
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+    }
+
+    .topbar-copy { max-width: 660px; }
+
+    .progress-wrap {
+      width: min(260px, 34vw);
+      flex: 0 0 auto;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 720;
+    }
+
+    .progress-track {
+      height: 9px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: #dfe8ee;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--teal));
+      transition: width .35s ease;
+    }
+
+    .quiz-card,
+    .summary-card {
+      max-width: 980px;
+      margin: 0 auto;
+      border: 1px solid rgba(19, 58, 87, 0.10);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.96);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .question-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #fbfdfe);
+    }
+
+    .question-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .level-badge,
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 5px 11px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .level-theory { color: #1c5cb4; background: var(--blue-soft); }
+    .level-easy { color: #08786e; background: var(--teal-soft); }
+    .level-medium { color: #9a6500; background: var(--amber-soft); }
+    .level-hard { color: #5d43c8; background: var(--violet-soft); }
+
+    .question-count { color: var(--muted); font-size: 0.86rem; font-weight: 720; }
+
+    .question-body { padding: 30px 28px 12px; }
+
+    .prompt {
+      margin: 0 0 25px;
+      color: #132a3e;
+      font-size: clamp(1.1rem, 2vw, 1.28rem);
+      font-weight: 680;
+      line-height: 1.7;
+    }
+
+    .math {
+      white-space: normal;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.06em;
+      font-style: italic;
+      font-weight: 650;
+    }
+
+    .options { display: grid; gap: 12px; }
+
+    .option {
+      position: relative;
+      width: 100%;
+      min-height: 64px;
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr) 28px;
+      align-items: center;
+      gap: 13px;
+      padding: 11px 16px;
+      border: 1.5px solid #d9e4eb;
+      border-radius: 15px;
+      color: var(--ink);
+      background: #ffffff;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease;
+    }
+
+    .option:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: #93b4d0;
+      box-shadow: 0 7px 18px rgba(28, 76, 112, 0.08);
+    }
+
+    .option:disabled { cursor: default; opacity: 1; }
+
+    .option-letter {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: #38536a;
+      background: #edf3f6;
+      font-weight: 850;
+    }
+
+    .option-text { min-width: 0; font-weight: 620; }
+    .option-state { font-size: 1.12rem; font-weight: 900; text-align: center; }
+
+    .option.is-correct {
+      border-color: #20a878;
+      color: #0d6548;
+      background: var(--green-soft);
+      box-shadow: inset 4px 0 0 #20a878;
+    }
+
+    .option.is-correct .option-letter { color: #ffffff; background: var(--green); }
+
+    .option.is-wrong {
+      border-color: #dc6670;
+      color: #982e38;
+      background: var(--red-soft);
+      box-shadow: inset 4px 0 0 #d64d59;
+    }
+
+    .option.is-wrong .option-letter { color: #ffffff; background: var(--red); }
+
+    .feedback {
+      margin: 24px 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      overflow: hidden;
+      animation: rise .25s ease both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .feedback.correct-feedback { border-color: #b8e2d1; }
+    .feedback.wrong-feedback { border-color: #f0c4c8; }
+
+    .feedback-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 17px;
+      font-size: 1rem;
+      font-weight: 850;
+    }
+
+    .correct-feedback .feedback-title { color: #0f6d50; background: var(--green-soft); }
+    .wrong-feedback .feedback-title { color: #a0313c; background: var(--red-soft); }
+
+    .feedback-content { padding: 18px; }
+
+    .answer-line {
+      margin: 0 0 12px;
+      padding: 10px 12px;
+      border-radius: 11px;
+      color: #153c5a;
+      background: #edf6fb;
+      font-weight: 720;
+    }
+
+    .solution { margin: 0; color: #334e62; }
+    .solution strong { color: var(--ink); }
+
+    details {
+      margin-top: 15px;
+      border-top: 1px dashed #d4e0e7;
+      padding-top: 13px;
+    }
+
+    summary {
+      color: #234e6f;
+      cursor: pointer;
+      font-weight: 780;
+    }
+
+    .choice-analysis {
+      display: grid;
+      gap: 9px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .choice-analysis li {
+      display: grid;
+      grid-template-columns: 27px minmax(0, 1fr);
+      gap: 8px;
+      color: #4f6575;
+      font-size: 0.92rem;
+    }
+
+    .choice-analysis b {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      color: #28475e;
+      background: #edf2f5;
+      font-size: .78rem;
+    }
+
+    .quiz-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 26px;
+      padding: 20px 28px;
+      border-top: 1px solid var(--line);
+      background: #fbfdfe;
+    }
+
+    .footer-hint { color: var(--muted); font-size: 0.84rem; }
+
+    .nav-actions { display: flex; gap: 10px; }
+
+    .btn {
+      min-height: 44px;
+      padding: 10px 17px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 780;
+      transition: transform .16s ease, background .16s ease;
+    }
+
+    .btn:hover:not(:disabled) { transform: translateY(-1px); }
+    .btn:disabled { cursor: not-allowed; opacity: .42; }
+    .btn-secondary { border: 1px solid #d1dde5; color: #385267; background: #ffffff; }
+    .btn-primary { border: 1px solid var(--navy); color: #ffffff; background: var(--navy); }
+    .btn-primary:hover:not(:disabled) { background: var(--navy-2); }
+
+    .summary-card { padding: clamp(25px, 4vw, 42px); }
+    .summary-card[hidden], .quiz-card[hidden] { display: none; }
+
+    .summary-hero {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 28px;
+      align-items: center;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .score-ring {
+      width: 158px;
+      height: 158px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--teal) var(--score-angle, 0deg), #e3eaee 0);
+      position: relative;
+    }
+
+    .score-ring::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .score-ring-content { position: relative; z-index: 1; text-align: center; }
+    .score-ring strong { display: block; color: var(--navy); font-size: 2.25rem; line-height: 1; }
+    .score-ring span { color: var(--muted); font-size: .82rem; font-weight: 720; }
+
+    .summary-hero h3 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.7rem, 3vw, 2.25rem);
+      line-height: 1.15;
+    }
+
+    .summary-hero p { margin: 0; color: var(--muted); }
+
+    .breakdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .breakdown-item {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfdfe;
+    }
+
+    .breakdown-item span { display: block; color: var(--muted); font-size: .8rem; font-weight: 700; }
+    .breakdown-item strong { display: block; margin-top: 3px; color: var(--navy); font-size: 1.35rem; }
+
+    .review-box {
+      padding: 18px;
+      border-radius: 16px;
+      background: #f3f7f9;
+    }
+
+    .review-box h4 { margin: 0 0 5px; color: var(--navy); font-size: 1rem; }
+    .review-box p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .review-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+    .review-chip {
+      min-width: 39px;
+      height: 39px;
+      border: 1px solid #e1aeb3;
+      border-radius: 10px;
+      color: #a4323d;
+      background: #ffffff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .summary-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 920px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; padding: 20px; }
+      .brand { margin-bottom: 16px; }
+      .score-card { grid-template-columns: 1fr 1fr; margin-bottom: 17px; }
+      .nav-groups { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+      .nav-group { margin: 0; }
+      .question-grid { grid-template-columns: repeat(5, minmax(34px, 1fr)); }
+      .legend, .reset-button { display: none; }
+      .main { padding-top: 27px; }
+    }
+
+    @media (max-width: 680px) {
+      .sidebar { padding: 17px 15px; }
+      .brand-mark { width: 42px; height: 42px; border-radius: 13px; }
+      .nav-groups { grid-template-columns: 1fr 1fr; }
+      .nav-group-title { margin-bottom: 7px; }
+      .main { padding: 22px 13px 34px; }
+      .topbar { display: block; margin-bottom: 17px; }
+      .topbar h2 { font-size: 1.75rem; }
+      .progress-wrap { width: 100%; margin-top: 18px; }
+      .question-head, .question-body, .quiz-footer { padding-left: 17px; padding-right: 17px; }
+      .question-head { align-items: flex-start; }
+      .question-body { padding-top: 23px; }
+      .option { grid-template-columns: 36px minmax(0, 1fr) 22px; gap: 10px; padding: 10px 12px; }
+      .option-letter { width: 34px; height: 34px; border-radius: 10px; }
+      .quiz-footer { align-items: stretch; flex-direction: column; }
+      .footer-hint { text-align: center; }
+      .nav-actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .summary-hero { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .breakdown { grid-template-columns: 1fr 1fr; }
+      .summary-actions { flex-direction: column; }
+      .summary-actions .btn { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Điều hướng đề thi">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">dy/dx</div>
+        <div>
+          <h1>Đạo hàm hàm ẩn</h1>
+          <p>20 câu · 4 mức độ</p>
+        </div>
+      </div>
+
+      <div class="score-card" aria-label="Tiến độ làm bài">
+        <div>
+          <span>Đã làm</span>
+          <strong id="answeredCount">0/20</strong>
+        </div>
+        <div>
+          <span>Đúng</span>
+          <strong id="scoreCount">0</strong>
+        </div>
+      </div>
+
+      <nav id="questionNav" class="nav-groups" aria-label="Danh sách 20 câu hỏi"></nav>
+
+      <div class="legend" aria-label="Chú thích trạng thái">
+        <span><i style="background:#16805f"></i>Đúng</span>
+        <span><i style="background:#b93d49"></i>Sai</span>
+        <span><i style="background:#38d3c5"></i>Đang xem</span>
+      </div>
+
+      <button id="resetSidebar" class="reset-button" type="button">Làm lại từ đầu</button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-copy">
+          <p class="eyebrow">Bài luyện tập tương tác</p>
+          <h2>Kiểm tra từng bước, hiểu ngay từng đáp án.</h2>
+        </div>
+        <div class="progress-wrap" aria-label="Thanh tiến độ">
+          <div class="progress-label">
+            <span>Tiến độ</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        </div>
+      </header>
+
+      <section id="quizCard" class="quiz-card" aria-labelledby="questionTitle">
+        <div class="question-head">
+          <div class="question-meta">
+            <span id="levelBadge" class="level-badge"></span>
+            <span id="questionCount" class="question-count"></span>
+          </div>
+          <span id="answeredBadge" class="status-badge" hidden></span>
+        </div>
+
+        <div class="question-body">
+          <h3 id="questionTitle" class="prompt"></h3>
+          <div id="options" class="options" role="group" aria-label="Các phương án trả lời"></div>
+          <div id="feedback" aria-live="polite"></div>
+        </div>
+
+        <footer class="quiz-footer">
+          <span class="footer-hint">Mỗi câu chỉ được chọn một lần. Đáp án sẽ hiện ngay sau khi chọn.</span>
+          <div class="nav-actions">
+            <button id="prevBtn" class="btn btn-secondary" type="button">← Câu trước</button>
+            <button id="nextBtn" class="btn btn-primary" type="button">Câu tiếp →</button>
+          </div>
+        </footer>
+      </section>
+
+      <section id="summaryCard" class="summary-card" aria-labelledby="summaryTitle" hidden>
+        <div class="summary-hero">
+          <div id="scoreRing" class="score-ring">
+            <div class="score-ring-content">
+              <strong id="finalScore">0/20</strong>
+              <span>câu đúng</span>
+            </div>
+          </div>
+          <div>
+            <p class="eyebrow">Kết quả bài làm</p>
+            <h3 id="summaryTitle">Bạn đã hoàn thành!</h3>
+            <p id="summaryMessage"></p>
+          </div>
+        </div>
+
+        <div id="breakdown" class="breakdown" aria-label="Kết quả theo mức độ"></div>
+
+        <div class="review-box">
+          <h4 id="reviewTitle">Các câu cần xem lại</h4>
+          <p id="reviewText"></p>
+          <div id="reviewList" class="review-list"></div>
+        </div>
+
+        <div class="summary-actions">
+          <button id="backToQuiz" class="btn btn-secondary" type="button">Quay lại xem lời giải</button>
+          <button id="resetSummary" class="btn btn-primary" type="button">Làm lại đề</button>
+        </div>
+      </section>
+
+      <p id="liveRegion" class="sr-only" aria-live="assertive"></p>
+    </main>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        id: 1,
+        level: "Lý thuyết",
+        levelClass: "theory",
+        prompt: `Cho <span class="math">F(x, y) = 0</span> và <span class="math">Fᵧ ≠ 0</span>. Công thức đạo hàm ẩn <span class="math">dy/dx</span> là gì?`,
+        options: [
+          { text: `<span class="math">Fₓ/Fᵧ</span>`, reason: `Sai vì khi chuyển <span class="math">Fₓ</span> sang vế kia phải có dấu âm.` },
+          { text: `<span class="math">−Fₓ/Fᵧ</span>`, reason: `Đúng. Từ <span class="math">Fₓ + Fᵧy′ = 0</span> suy ra <span class="math">y′ = −Fₓ/Fᵧ</span>.` },
+          { text: `<span class="math">−Fᵧ/Fₓ</span>`, reason: `Sai vì tử số và mẫu số đã bị đảo vị trí.` },
+          { text: `<span class="math">Fₓ + Fᵧ</span>`, reason: `Sai vì đây không phải kết quả sau khi giải phương trình theo <span class="math">y′</span>.` }
+        ],
+        answer: 1,
+        solution: `Xem <span class="math">y</span> là hàm của <span class="math">x</span>. Lấy đạo hàm hai vế: <span class="math">Fₓ + Fᵧ·y′ = 0</span>. Vì <span class="math">Fᵧ ≠ 0</span>, chia hai vế cho <span class="math">Fᵧ</span> để được <span class="math">y′ = −Fₓ/Fᵧ</span>.`
+      },
+      {
+        id: 2,
+        level: "Lý thuyết",
+        levelClass: "theory",
+        prompt: `Giả sử <span class="math">F</span> khả vi liên tục và <span class="math">F(a,b)=0</span>. Điều kiện nào bảo đảm có thể biểu diễn cục bộ <span class="math">y</span> như một hàm khả vi của <span class="math">x</span> gần <span class="math">(a,b)</span>?`,
+        options: [
+          { text: `<span class="math">Fₓ(a,b)=0</span>`, reason: `Sai. Điều kiện này liên quan đến tiếp tuyến ngang, không bảo đảm giải được theo <span class="math">y</span>.` },
+          { text: `<span class="math">F(a,b)=1</span>`, reason: `Sai vì điểm đang nằm trên đường cong phải thỏa <span class="math">F(a,b)=0</span>.` },
+          { text: `<span class="math">Fᵧ(a,b)≠0</span>`, reason: `Đúng. Đây là điều kiện then chốt của định lý hàm ẩn để giải cục bộ theo <span class="math">y</span>.` },
+          { text: `<span class="math">b=0</span>`, reason: `Sai. Giá trị <span class="math">b</span> bằng 0 hay không không phải điều kiện tổng quát của định lý.` }
+        ],
+        answer: 2,
+        solution: `Theo định lý hàm ẩn, nếu <span class="math">F(a,b)=0</span>, <span class="math">F</span> khả vi liên tục và <span class="math">Fᵧ(a,b)≠0</span>, thì gần điểm đó tồn tại duy nhất một hàm khả vi <span class="math">y=f(x)</span> thỏa <span class="math">F(x,f(x))=0</span>.`
+      },
+      {
+        id: 3,
+        level: "Lý thuyết",
+        levelClass: "theory",
+        prompt: `Khi lấy đạo hàm theo <span class="math">x</span> của biểu thức <span class="math">y³</span> trong một phương trình ẩn, vì sao kết quả là <span class="math">3y²y′</span>?`,
+        options: [
+          { text: `Vì <span class="math">y</span> phụ thuộc vào <span class="math">x</span>, nên phải dùng quy tắc dây chuyền`, reason: `Đúng. Ta đạo hàm hàm ngoài <span class="math">u³</span> rồi nhân với đạo hàm hàm trong <span class="math">y(x)</span>.` },
+          { text: `Vì <span class="math">y</span> luôn bằng <span class="math">x</span>`, reason: `Sai. Hàm ẩn không yêu cầu <span class="math">y=x</span>.` },
+          { text: `Vì số mũ 3 tự động trở thành <span class="math">y′</span>`, reason: `Sai. <span class="math">y′</span> xuất hiện do quy tắc dây chuyền, không phải do số mũ.` },
+          { text: `Vì <span class="math">y</span> là một hằng số`, reason: `Sai. Nếu <span class="math">y</span> là hằng số thì đạo hàm của <span class="math">y³</span> phải bằng 0.` }
+        ],
+        answer: 0,
+        solution: `Viết <span class="math">y=y(x)</span>. Khi đó <span class="math">d[y(x)³]/dx = 3y(x)²·dy/dx = 3y²y′</span>. Đây chính là quy tắc dây chuyền.`
+      },
+      {
+        id: 4,
+        level: "Lý thuyết",
+        levelClass: "theory",
+        prompt: `Hệ số góc của tiếp tuyến với đường cong ẩn tại điểm <span class="math">(x₀,y₀)</span> được xác định bởi đại lượng nào?`,
+        options: [
+          { text: `Giá trị <span class="math">y₀</span>`, reason: `Sai. Tung độ của điểm không tự nó cho biết độ dốc của tiếp tuyến.` },
+          { text: `Giá trị <span class="math">x₀</span>`, reason: `Sai. Hoành độ của điểm không phải hệ số góc.` },
+          { text: `Chỉ riêng <span class="math">Fᵧ(x₀,y₀)</span>`, reason: `Sai. Trong trường hợp thông thường cần cả <span class="math">Fₓ</span> và <span class="math">Fᵧ</span>.` },
+          { text: `<span class="math">(dy/dx)|(x₀,y₀)</span>`, reason: `Đúng. Đạo hàm tại điểm chính là hệ số góc của tiếp tuyến không thẳng đứng.` }
+        ],
+        answer: 3,
+        solution: `Sau khi tìm <span class="math">y′</span> bằng phương pháp đạo hàm ẩn, thay <span class="math">x=x₀, y=y₀</span>. Giá trị nhận được là hệ số góc <span class="math">m</span> của tiếp tuyến.`
+      },
+      {
+        id: 5,
+        level: "Lý thuyết",
+        levelClass: "theory",
+        prompt: `Tại một điểm chính quy của đường cong <span class="math">F(x,y)=0</span>, điều kiện nào thường cho biết tiếp tuyến là đường thẳng đứng?`,
+        options: [
+          { text: `<span class="math">Fₓ=0, Fᵧ≠0</span>`, reason: `Sai. Khi đó <span class="math">y′=0</span>, nên tiếp tuyến thường nằm ngang.` },
+          { text: `<span class="math">Fᵧ=0, Fₓ≠0</span>`, reason: `Đúng. Công thức <span class="math">y′=−Fₓ/Fᵧ</span> có mẫu bằng 0, còn điểm vẫn chính quy.` },
+          { text: `<span class="math">Fₓ=Fᵧ=0</span>`, reason: `Sai. Đây là điểm kỳ dị; chỉ điều kiện này chưa đủ để kết luận tiếp tuyến thẳng đứng.` },
+          { text: `<span class="math">FₓFᵧ=1</span>`, reason: `Sai. Tích bằng 1 không mô tả điều kiện tiếp tuyến thẳng đứng.` }
+        ],
+        answer: 1,
+        solution: `Vì <span class="math">y′=−Fₓ/Fᵧ</span>, khi <span class="math">Fᵧ=0</span> và <span class="math">Fₓ≠0</span>, độ dốc theo <span class="math">dy/dx</span> trở nên vô hạn/không xác định; tiếp tuyến là đường thẳng đứng.`
+      },
+      {
+        id: 6,
+        level: "Dễ",
+        levelClass: "easy",
+        prompt: `Cho <span class="math">x+y=5</span>. Tính <span class="math">y′</span>.`,
+        options: [
+          { text: `<span class="math">−1</span>`, reason: `Đúng. Từ <span class="math">1+y′=0</span> suy ra <span class="math">y′=−1</span>.` },
+          { text: `<span class="math">1</span>`, reason: `Sai vì chưa chuyển đạo hàm của <span class="math">x</span> sang vế còn lại.` },
+          { text: `<span class="math">5</span>`, reason: `Sai. Đạo hàm của hằng số 5 bằng 0, không phải 5.` },
+          { text: `<span class="math">0</span>`, reason: `Sai. <span class="math">y=5−x</span> không phải hàm hằng.` }
+        ],
+        answer: 0,
+        solution: `Lấy đạo hàm hai vế: <span class="math">d(x)/dx+d(y)/dx=d(5)/dx</span>, tức <span class="math">1+y′=0</span>. Do đó <span class="math">y′=−1</span>.`
+      },
+      {
+        id: 7,
+        level: "Dễ",
+        levelClass: "easy",
+        prompt: `Với đường tròn <span class="math">x²+y²=25</span>, hệ số góc tiếp tuyến tại <span class="math">(3,4)</span> bằng bao nhiêu?`,
+        options: [
+          { text: `<span class="math">4/3</span>`, reason: `Sai vì đã lấy <span class="math">y/x</span> và thiếu dấu âm.` },
+          { text: `<span class="math">3/4</span>`, reason: `Sai vì đúng tỷ số nhưng thiếu dấu âm.` },
+          { text: `<span class="math">−3/4</span>`, reason: `Đúng. Công thức là <span class="math">y′=−x/y</span>; thay <span class="math">(3,4)</span> được <span class="math">−3/4</span>.` },
+          { text: `<span class="math">−4/3</span>`, reason: `Sai vì đã đảo tử và mẫu.` }
+        ],
+        answer: 2,
+        solution: `Đạo hàm: <span class="math">2x+2yy′=0</span>. Suy ra <span class="math">y′=−x/y</span>. Tại <span class="math">(3,4)</span>, <span class="math">y′=−3/4</span>.`
+      },
+      {
+        id: 8,
+        level: "Dễ",
+        levelClass: "easy",
+        prompt: `Cho <span class="math">xy=6</span>. Tính <span class="math">y′</span> tại điểm <span class="math">(2,3)</span>.`,
+        options: [
+          { text: `<span class="math">2/3</span>`, reason: `Sai vì đã lấy <span class="math">x/y</span> và bỏ dấu âm.` },
+          { text: `<span class="math">−2/3</span>`, reason: `Sai vì đã đảo tỷ số cần tính.` },
+          { text: `<span class="math">3/2</span>`, reason: `Sai vì thiếu dấu âm.` },
+          { text: `<span class="math">−3/2</span>`, reason: `Đúng. Quy tắc tích cho <span class="math">y+xy′=0</span>, nên <span class="math">y′=−y/x=−3/2</span>.` }
+        ],
+        answer: 3,
+        solution: `Đạo hàm tích <span class="math">xy</span>: <span class="math">y+xy′=0</span>. Vì vậy <span class="math">y′=−y/x</span>. Thay <span class="math">x=2, y=3</span> được <span class="math">−3/2</span>.`
+      },
+      {
+        id: 9,
+        level: "Dễ",
+        levelClass: "easy",
+        prompt: `Cho <span class="math">y²=x+1</span>. Tính <span class="math">y′</span> tại <span class="math">(3,2)</span>.`,
+        options: [
+          { text: `<span class="math">4</span>`, reason: `Sai vì đã nhân với <span class="math">2y</span> thay vì chia cho nó.` },
+          { text: `<span class="math">1/4</span>`, reason: `Đúng. Từ <span class="math">2yy′=1</span>, tại <span class="math">y=2</span> có <span class="math">y′=1/4</span>.` },
+          { text: `<span class="math">−1/4</span>`, reason: `Sai vì phương trình đạo hàm không tạo ra dấu âm.` },
+          { text: `<span class="math">1/2</span>`, reason: `Sai vì quên thay <span class="math">y=2</span> vào mẫu <span class="math">2y</span>.` }
+        ],
+        answer: 1,
+        solution: `Lấy đạo hàm: <span class="math">2yy′=1</span>, do đó <span class="math">y′=1/(2y)</span>. Tại <span class="math">y=2</span>, kết quả là <span class="math">1/4</span>.`
+      },
+      {
+        id: 10,
+        level: "Dễ",
+        levelClass: "easy",
+        prompt: `Với <span class="math">x²+xy+y²=7</span>, tính <span class="math">y′</span> tại <span class="math">(1,2)</span>.`,
+        options: [
+          { text: `<span class="math">−5/4</span>`, reason: `Sai vì đã đảo tử và mẫu của công thức đúng.` },
+          { text: `<span class="math">4/5</span>`, reason: `Sai vì thiếu dấu âm.` },
+          { text: `<span class="math">−4/5</span>`, reason: `Đúng. <span class="math">y′=−(2x+y)/(x+2y)=−4/5</span>.` },
+          { text: `<span class="math">5/4</span>`, reason: `Sai vì vừa đảo tỷ số vừa bỏ dấu âm.` }
+        ],
+        answer: 2,
+        solution: `Đạo hàm hai vế: <span class="math">2x+y+xy′+2yy′=0</span>. Gom <span class="math">y′</span>: <span class="math">(x+2y)y′=−(2x+y)</span>. Thay <span class="math">(1,2)</span> được <span class="math">y′=−4/5</span>.`
+      },
+      {
+        id: 11,
+        level: "Trung bình",
+        levelClass: "medium",
+        prompt: `Cho đường cong <span class="math">x³+y³=6xy</span>. Tính <span class="math">y′</span> tại <span class="math">(3,3)</span>.`,
+        options: [
+          { text: `<span class="math">−1</span>`, reason: `Đúng. Thay <span class="math">(3,3)</span> vào phương trình đạo hàm thu được <span class="math">27+27y′=18+18y′</span>.` },
+          { text: `<span class="math">1</span>`, reason: `Sai vì khi chuyển vế, <span class="math">9y′=−9</span> chứ không phải <span class="math">9</span>.` },
+          { text: `<span class="math">−3</span>`, reason: `Sai do hệ số sau khi rút gọn là <span class="math">9y′=−9</span>.` },
+          { text: `<span class="math">3</span>`, reason: `Sai vì cả dấu và độ lớn đều không khớp phương trình đạo hàm.` }
+        ],
+        answer: 0,
+        solution: `Lấy đạo hàm: <span class="math">3x²+3y²y′=6y+6xy′</span>. Tại <span class="math">(3,3)</span>: <span class="math">27+27y′=18+18y′</span>, nên <span class="math">9y′=−9</span> và <span class="math">y′=−1</span>.`
+      },
+      {
+        id: 12,
+        level: "Trung bình",
+        levelClass: "medium",
+        prompt: `Cho <span class="math">e^(xy)+x+y=e+2</span>. Tính <span class="math">y′</span> tại <span class="math">(1,1)</span>.`,
+        options: [
+          { text: `<span class="math">1</span>`, reason: `Sai vì hai nhóm hệ số của <span class="math">y′</span> và phần còn lại nằm ở hai vế đối dấu.` },
+          { text: `<span class="math">−e</span>`, reason: `Sai vì còn phải chia cho hệ số <span class="math">e+1</span> của <span class="math">y′</span>.` },
+          { text: `<span class="math">−1/e</span>`, reason: `Sai vì cả tử và mẫu tại điểm đều bằng <span class="math">e+1</span>, không phải lần lượt 1 và <span class="math">e</span>.` },
+          { text: `<span class="math">−1</span>`, reason: `Đúng. Tại <span class="math">(1,1)</span>, phương trình là <span class="math">(e+1)+(e+1)y′=0</span>.` }
+        ],
+        answer: 3,
+        solution: `Dùng quy tắc dây chuyền: <span class="math">e^(xy)(y+xy′)+1+y′=0</span>. Thay <span class="math">x=y=1</span>: <span class="math">e(1+y′)+1+y′=0</span>, tức <span class="math">(e+1)(1+y′)=0</span>. Vậy <span class="math">y′=−1</span>.`
+      },
+      {
+        id: 13,
+        level: "Trung bình",
+        levelClass: "medium",
+        prompt: `Cho <span class="math">ln(x+y)+xy=ln3+2</span>. Tính <span class="math">y′</span> tại <span class="math">(1,2)</span>.`,
+        options: [
+          { text: `<span class="math">−4/7</span>`, reason: `Sai vì đã lấy nghịch đảo của tỷ số đúng.` },
+          { text: `<span class="math">−7/4</span>`, reason: `Đúng. <span class="math">y′=−[1/(x+y)+y]/[1/(x+y)+x]</span>, tại điểm bằng <span class="math">−7/4</span>.` },
+          { text: `<span class="math">7/4</span>`, reason: `Sai vì thiếu dấu âm khi chuyển các hạng không chứa <span class="math">y′</span> sang vế phải.` },
+          { text: `<span class="math">−3/4</span>`, reason: `Sai vì chưa cộng đúng các hệ số <span class="math">1/3+2</span> ở tử.` }
+        ],
+        answer: 1,
+        solution: `Đạo hàm: <span class="math">(1+y′)/(x+y)+y+xy′=0</span>. Do đó <span class="math">[1/(x+y)+x]y′=−[1/(x+y)+y]</span>. Tại <span class="math">(1,2)</span>: <span class="math">y′=−(1/3+2)/(1/3+1)=−7/4</span>.`
+      },
+      {
+        id: 14,
+        level: "Trung bình",
+        levelClass: "medium",
+        prompt: `Cho <span class="math">x²y+xy²=6</span>. Tính <span class="math">y′</span> tại <span class="math">(1,2)</span>.`,
+        options: [
+          { text: `<span class="math">−5/8</span>`, reason: `Sai vì đã đảo tử và mẫu.` },
+          { text: `<span class="math">8/5</span>`, reason: `Sai vì thiếu dấu âm.` },
+          { text: `<span class="math">−8/5</span>`, reason: `Đúng. Tử số là <span class="math">2xy+y²=8</span>, mẫu số là <span class="math">x²+2xy=5</span>.` },
+          { text: `<span class="math">−4/5</span>`, reason: `Sai vì đã bỏ sót một hạng khi dùng quy tắc tích.` }
+        ],
+        answer: 2,
+        solution: `Đạo hàm: <span class="math">2xy+x²y′+y²+2xyy′=0</span>. Vì thế <span class="math">y′=−(2xy+y²)/(x²+2xy)</span>. Thay <span class="math">(1,2)</span> được <span class="math">−8/5</span>.`
+      },
+      {
+        id: 15,
+        level: "Trung bình",
+        levelClass: "medium",
+        prompt: `Cho <span class="math">sin(x+y)=xy</span>. Tính <span class="math">y′</span> tại <span class="math">(0,0)</span>.`,
+        options: [
+          { text: `<span class="math">−1</span>`, reason: `Đúng. Tại gốc tọa độ, phương trình đạo hàm trở thành <span class="math">1+y′=0</span>.` },
+          { text: `<span class="math">0</span>`, reason: `Sai vì đạo hàm vế trái tại <span class="math">(0,0)</span> không bằng 0.` },
+          { text: `<span class="math">1</span>`, reason: `Sai vì chưa chuyển số 1 sang vế phải.` },
+          { text: `Không xác định`, reason: `Sai. Hệ số của <span class="math">y′</span> tại điểm bằng 1 nên đạo hàm tồn tại.` }
+        ],
+        answer: 0,
+        solution: `Đạo hàm hai vế: <span class="math">cos(x+y)(1+y′)=y+xy′</span>. Thay <span class="math">x=0,y=0</span>: <span class="math">1·(1+y′)=0</span>. Suy ra <span class="math">y′=−1</span>.`
+      },
+      {
+        id: 16,
+        level: "Khó",
+        levelClass: "hard",
+        prompt: `Với <span class="math">x²+y²=25</span>, tính đạo hàm cấp hai <span class="math">y″</span> tại <span class="math">(3,4)</span>.`,
+        options: [
+          { text: `<span class="math">25/64</span>`, reason: `Sai vì đạo hàm cấp hai mang dấu âm tại điểm này.` },
+          { text: `<span class="math">−7/16</span>`, reason: `Sai vì đã cộng sai <span class="math">1+(−3/4)²</span>.` },
+          { text: `<span class="math">−1/4</span>`, reason: `Sai vì đã bỏ mất hạng <span class="math">(y′)²</span> khi đạo hàm <span class="math">yy′</span>.` },
+          { text: `<span class="math">−25/64</span>`, reason: `Đúng. <span class="math">y″=−[1+(y′)²]/y</span>; với <span class="math">y′=−3/4</span> ta được <span class="math">−25/64</span>.` }
+        ],
+        answer: 3,
+        solution: `Từ <span class="math">2x+2yy′=0</span>, đạo hàm lần nữa: <span class="math">2+2[(y′)²+yy″]=0</span>. Suy ra <span class="math">y″=−[1+(y′)²]/y</span>. Tại <span class="math">(3,4)</span>, <span class="math">y′=−3/4</span>, nên <span class="math">y″=−(1+9/16)/4=−25/64</span>.`
+      },
+      {
+        id: 17,
+        level: "Khó",
+        levelClass: "hard",
+        prompt: `Cho <span class="math">x³+y³=6xy</span>. Tính <span class="math">y″</span> tại <span class="math">(3,3)</span>.`,
+        options: [
+          { text: `<span class="math">16/3</span>`, reason: `Sai vì thiếu dấu âm khi giải phương trình theo <span class="math">y″</span>.` },
+          { text: `<span class="math">−16/3</span>`, reason: `Đúng. Với <span class="math">y′=−1</span>, phương trình đạo hàm cấp hai cho <span class="math">9y″=−48</span>.` },
+          { text: `<span class="math">−8/3</span>`, reason: `Sai vì đã bỏ một trong hai hạng <span class="math">6y′</span> khi đạo hàm <span class="math">6xy′</span> và <span class="math">6y</span>.` },
+          { text: `<span class="math">−16/9</span>`, reason: `Sai vì chia thêm cho 3 một lần nữa.` }
+        ],
+        answer: 1,
+        solution: `Lần một: <span class="math">3x²+3y²y′=6y+6xy′</span>, nên tại <span class="math">(3,3)</span> có <span class="math">y′=−1</span>. Lần hai: <span class="math">6x+6y(y′)²+3y²y″=12y′+6xy″</span>. Thay số: <span class="math">18+18+27y″=−12+18y″</span>, do đó <span class="math">y″=−16/3</span>.`
+      },
+      {
+        id: 18,
+        level: "Khó",
+        levelClass: "hard",
+        prompt: `Với <span class="math">x²+xy+y²=7</span>, tính <span class="math">y″</span> tại <span class="math">(1,2)</span>.`,
+        options: [
+          { text: `<span class="math">42/125</span>`, reason: `Sai vì đạo hàm cấp hai phải mang dấu âm trong công thức thu được.` },
+          { text: `<span class="math">−42/25</span>`, reason: `Sai vì chưa chia tiếp cho <span class="math">x+2y=5</span>.` },
+          { text: `<span class="math">−42/125</span>`, reason: `Đúng. Với <span class="math">y′=−4/5</span>, ta có <span class="math">y″=−[2+2y′+2(y′)²]/(x+2y)=−42/125</span>.` },
+          { text: `<span class="math">−14/25</span>`, reason: `Sai vì rút gọn sai biểu thức <span class="math">2+2y′+2(y′)²</span>.` }
+        ],
+        answer: 2,
+        solution: `Phương trình đạo hàm lần một là <span class="math">2x+y+(x+2y)y′=0</span>, nên tại điểm <span class="math">y′=−4/5</span>. Đạo hàm tiếp: <span class="math">2+2y′+2(y′)²+(x+2y)y″=0</span>. Thay số được <span class="math">y″=−(42/25)/5=−42/125</span>.`
+      },
+      {
+        id: 19,
+        level: "Khó",
+        levelClass: "hard",
+        prompt: `Cho <span class="math">xeʸ+yeˣ=2e</span>. Tính <span class="math">y″</span> tại <span class="math">(1,1)</span>.`,
+        options: [
+          { text: `<span class="math">1</span>`, reason: `Đúng. Công thức đạo hàm cấp hai cho tử số <span class="math">−2e</span> và mẫu <span class="math">2e</span>, nên kết quả bằng 1.` },
+          { text: `<span class="math">0</span>`, reason: `Sai. Dù đường cong đối xứng và <span class="math">y′=−1</span>, độ cong tại điểm không bằng 0.` },
+          { text: `<span class="math">−1</span>`, reason: `Sai vì bỏ dấu âm ngoài công thức <span class="math">y″=−(Fₓₓ+2Fₓᵧy′+Fᵧᵧ(y′)²)/Fᵧ</span>.` },
+          { text: `<span class="math">2</span>`, reason: `Sai vì chưa chia đúng cho <span class="math">Fᵧ=2e</span>.` }
+        ],
+        answer: 0,
+        solution: `Đặt <span class="math">F=xeʸ+yeˣ−2e</span>. Tại <span class="math">(1,1)</span>, <span class="math">y′=−1</span>, <span class="math">Fᵧ=2e</span>, <span class="math">Fₓₓ=e</span>, <span class="math">Fₓᵧ=2e</span>, <span class="math">Fᵧᵧ=e</span>. Do đó <span class="math">y″=−[e+2(2e)(−1)+e]/(2e)=1</span>.`
+      },
+      {
+        id: 20,
+        level: "Khó",
+        levelClass: "hard",
+        prompt: `Cho <span class="math">xy+ln y=x²</span> với <span class="math">y&gt;0</span>. Tính <span class="math">y″</span> tại <span class="math">(1,1)</span>.`,
+        options: [
+          { text: `<span class="math">1/8</span>`, reason: `Sai vì đã xử lý thiếu hệ số của <span class="math">y″</span>.` },
+          { text: `<span class="math">1/2</span>`, reason: `Sai. Đây là giá trị của <span class="math">y′</span> tại điểm, chưa phải <span class="math">y″</span>.` },
+          { text: `<span class="math">−5/8</span>`, reason: `Sai vì dấu khi chuyển <span class="math">3/4</span> sang vế phải bị nhầm.` },
+          { text: `<span class="math">5/8</span>`, reason: `Đúng. Sau khi thay <span class="math">y′=1/2</span>, phương trình cấp hai là <span class="math">3/4+2y″=2</span>.` }
+        ],
+        answer: 3,
+        solution: `Lần một: <span class="math">y+xy′+y′/y=2x</span>. Tại <span class="math">(1,1)</span>, <span class="math">1+2y′=2</span>, nên <span class="math">y′=1/2</span>. Lần hai: <span class="math">2y′+xy″+y″/y−(y′)²/y²=2</span>. Thay số: <span class="math">1+2y″−1/4=2</span>, suy ra <span class="math">y″=5/8</span>.`
+      }
+    ];
+
+    const letters = ["A", "B", "C", "D"];
+    const levelOrder = ["Lý thuyết", "Dễ", "Trung bình", "Khó"];
+    let current = 0;
+    let answers = Array(questions.length).fill(null);
+
+    const els = {
+      questionNav: document.getElementById("questionNav"),
+      answeredCount: document.getElementById("answeredCount"),
+      scoreCount: document.getElementById("scoreCount"),
+      progressText: document.getElementById("progressText"),
+      progressBar: document.getElementById("progressBar"),
+      quizCard: document.getElementById("quizCard"),
+      summaryCard: document.getElementById("summaryCard"),
+      levelBadge: document.getElementById("levelBadge"),
+      questionCount: document.getElementById("questionCount"),
+      answeredBadge: document.getElementById("answeredBadge"),
+      questionTitle: document.getElementById("questionTitle"),
+      options: document.getElementById("options"),
+      feedback: document.getElementById("feedback"),
+      prevBtn: document.getElementById("prevBtn"),
+      nextBtn: document.getElementById("nextBtn"),
+      resetSidebar: document.getElementById("resetSidebar"),
+      resetSummary: document.getElementById("resetSummary"),
+      backToQuiz: document.getElementById("backToQuiz"),
+      finalScore: document.getElementById("finalScore"),
+      scoreRing: document.getElementById("scoreRing"),
+      summaryTitle: document.getElementById("summaryTitle"),
+      summaryMessage: document.getElementById("summaryMessage"),
+      breakdown: document.getElementById("breakdown"),
+      reviewTitle: document.getElementById("reviewTitle"),
+      reviewText: document.getElementById("reviewText"),
+      reviewList: document.getElementById("reviewList"),
+      liveRegion: document.getElementById("liveRegion")
+    };
+
+    function getStats() {
+      const answered = answers.filter(answer => answer !== null).length;
+      const score = answers.reduce((total, answer, index) => total + (answer === questions[index].answer ? 1 : 0), 0);
+      return { answered, score };
+    }
+
+    function renderNavigation() {
+      els.questionNav.innerHTML = levelOrder.map(level => {
+        const levelQuestions = questions.filter(question => question.level === level);
+        const done = levelQuestions.filter(question => answers[question.id - 1] !== null).length;
+        return `
+          <section class="nav-group" aria-label="Nhóm ${level}">
+            <div class="nav-group-title"><span>${level}</span><small>${done}/5</small></div>
+            <div class="question-grid">
+              ${levelQuestions.map(question => {
+                const index = question.id - 1;
+                const selected = answers[index];
+                const state = selected === null ? "" : (selected === question.answer ? "correct" : "incorrect");
+                const currentClass = index === current && !els.quizCard.hidden ? "current" : "";
+                const labelState = selected === null ? "chưa trả lời" : (selected === question.answer ? "trả lời đúng" : "trả lời sai");
+                return `<button class="q-nav ${state} ${currentClass}" type="button" data-question="${index}" aria-label="Câu ${question.id}, ${labelState}" ${index === current && !els.quizCard.hidden ? 'aria-current="true"' : ""}>${question.id}</button>`;
+              }).join("")}
+            </div>
+          </section>`;
+      }).join("");
+
+      els.questionNav.querySelectorAll("[data-question]").forEach(button => {
+        button.addEventListener("click", () => {
+          current = Number(button.dataset.question);
+          showQuiz();
+        });
+      });
+    }
+
+    function renderProgress() {
+      const { answered, score } = getStats();
+      const percent = Math.round(answered / questions.length * 100);
+      els.answeredCount.textContent = `${answered}/${questions.length}`;
+      els.scoreCount.textContent = score;
+      els.progressText.textContent = `${percent}%`;
+      els.progressBar.style.width = `${percent}%`;
+    }
+
+    function renderQuestion() {
+      const question = questions[current];
+      const selected = answers[current];
+      const isAnswered = selected !== null;
+      const isCorrect = selected === question.answer;
+
+      els.levelBadge.className = `level-badge level-${question.levelClass}`;
+      els.levelBadge.textContent = question.level;
+      els.questionCount.textContent = `Câu ${question.id} / ${questions.length}`;
+      els.questionTitle.innerHTML = question.prompt;
+      els.answeredBadge.hidden = !isAnswered;
+      if (isAnswered) {
+        els.answeredBadge.textContent = isCorrect ? "Đã trả lời đúng" : "Đã trả lời sai";
+        els.answeredBadge.style.color = isCorrect ? "#0f6d50" : "#a0313c";
+        els.answeredBadge.style.background = isCorrect ? "#e6f7ef" : "#fff0f1";
+      }
+
+      els.options.innerHTML = question.options.map((option, index) => {
+        let stateClass = "";
+        let icon = "";
+        if (isAnswered && index === question.answer) {
+          stateClass = "is-correct";
+          icon = "✓";
+        } else if (isAnswered && index === selected) {
+          stateClass = "is-wrong";
+          icon = "×";
+        }
+        return `
+          <button class="option ${stateClass}" type="button" data-option="${index}" ${isAnswered ? "disabled" : ""} aria-label="Phương án ${letters[index]}${isAnswered && index === question.answer ? ", đáp án đúng" : ""}">
+            <span class="option-letter">${letters[index]}</span>
+            <span class="option-text">${option.text}</span>
+            <span class="option-state" aria-hidden="true">${icon}</span>
+          </button>`;
+      }).join("");
+
+      if (!isAnswered) {
+        els.options.querySelectorAll("[data-option]").forEach(button => {
+          button.addEventListener("click", () => selectAnswer(Number(button.dataset.option)));
+        });
+        els.feedback.innerHTML = "";
+      } else {
+        renderFeedback(question, selected);
+      }
+
+      els.prevBtn.disabled = current === 0;
+      els.nextBtn.textContent = current === questions.length - 1 ? "Xem kết quả →" : "Câu tiếp →";
+      renderProgress();
+      renderNavigation();
+    }
+
+    function renderFeedback(question, selected) {
+      const correct = selected === question.answer;
+      const selectedExplanation = question.options[selected].reason;
+      els.feedback.innerHTML = `
+        <section class="feedback ${correct ? "correct-feedback" : "wrong-feedback"}" tabindex="-1" aria-label="Phản hồi đáp án">
+          <div class="feedback-title">
+            <span aria-hidden="true">${correct ? "✓" : "×"}</span>
+            <span>${correct ? "Chính xác!" : "Chưa đúng."} ${correct ? "Bạn đã chọn đúng đáp án." : `Lựa chọn ${letters[selected]} chưa chính xác.`}</span>
+          </div>
+          <div class="feedback-content">
+            <p class="answer-line">Đáp án đúng: ${letters[question.answer]}. ${question.options[question.answer].text}</p>
+            ${correct ? "" : `<p class="solution"><strong>Vì sao lựa chọn của bạn sai?</strong> ${selectedExplanation}</p>`}
+            <p class="solution" style="margin-top:${correct ? "0" : "10px"}"><strong>Lời giải:</strong> ${question.solution}</p>
+            <details>
+              <summary>Phân tích cả 4 lựa chọn</summary>
+              <ul class="choice-analysis">
+                ${question.options.map((option, index) => `<li><b>${letters[index]}</b><span>${option.reason}</span></li>`).join("")}
+              </ul>
+            </details>
+          </div>
+        </section>`;
+    }
+
+    function selectAnswer(optionIndex) {
+      if (answers[current] !== null) return;
+      answers[current] = optionIndex;
+      const correct = optionIndex === questions[current].answer;
+      renderQuestion();
+      els.liveRegion.textContent = correct
+        ? `Câu ${current + 1}: chính xác.`
+        : `Câu ${current + 1}: chưa đúng. Đáp án đúng là ${letters[questions[current].answer]}.`;
+      const feedbackPanel = els.feedback.querySelector(".feedback");
+      if (feedbackPanel) feedbackPanel.focus({ preventScroll: true });
+    }
+
+    function showQuiz() {
+      els.summaryCard.hidden = true;
+      els.quizCard.hidden = false;
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showSummary() {
+      const { answered, score } = getStats();
+      const percent = Math.round(score / questions.length * 100);
+      els.quizCard.hidden = true;
+      els.summaryCard.hidden = false;
+      els.finalScore.textContent = `${score}/${questions.length}`;
+      els.scoreRing.style.setProperty("--score-angle", `${score / questions.length * 360}deg`);
+
+      if (score >= 17) {
+        els.summaryTitle.textContent = "Nền tảng rất vững!";
+        els.summaryMessage.textContent = `Bạn đạt ${percent}% và xử lý tốt cả các câu đạo hàm cấp hai.`;
+      } else if (score >= 14) {
+        els.summaryTitle.textContent = "Kết quả tốt!";
+        els.summaryMessage.textContent = `Bạn đạt ${percent}%. Hãy xem lại vài bước biến đổi để tăng độ chính xác.`;
+      } else if (score >= 10) {
+        els.summaryTitle.textContent = "Bạn đã nắm được nền tảng.";
+        els.summaryMessage.textContent = `Bạn đạt ${percent}%. Phần phân tích từng lựa chọn sẽ giúp bạn củng cố các lỗi còn lại.`;
+      } else {
+        els.summaryTitle.textContent = "Hãy ôn lại từng bước.";
+        els.summaryMessage.textContent = `Bạn đạt ${percent}%. Bắt đầu từ quy tắc dây chuyền và công thức y′ = −Fₓ/Fᵧ nhé.`;
+      }
+
+      if (answered < questions.length) {
+        els.summaryMessage.textContent += ` Bạn còn ${questions.length - answered} câu chưa trả lời.`;
+      }
+
+      els.breakdown.innerHTML = levelOrder.map(level => {
+        const indices = questions.map((question, index) => question.level === level ? index : -1).filter(index => index >= 0);
+        const correct = indices.filter(index => answers[index] === questions[index].answer).length;
+        return `<div class="breakdown-item"><span>${level}</span><strong>${correct}/5</strong></div>`;
+      }).join("");
+
+      const reviewIndices = questions.map((question, index) => answers[index] !== question.answer ? index : -1).filter(index => index >= 0);
+      if (reviewIndices.length === 0) {
+        els.reviewTitle.textContent = "Hoàn hảo — không có câu sai";
+        els.reviewText.textContent = "Bạn đã trả lời đúng toàn bộ 20 câu.";
+        els.reviewList.innerHTML = "";
+      } else {
+        els.reviewTitle.textContent = "Các câu cần xem lại";
+        els.reviewText.textContent = "Nhấn vào số câu để quay lại xem đáp án và lời giải chi tiết.";
+        els.reviewList.innerHTML = reviewIndices.map(index => `<button class="review-chip" type="button" data-review="${index}" aria-label="Xem lại câu ${index + 1}">${index + 1}</button>`).join("");
+        els.reviewList.querySelectorAll("[data-review]").forEach(button => {
+          button.addEventListener("click", () => {
+            current = Number(button.dataset.review);
+            showQuiz();
+          });
+        });
+      }
+
+      renderProgress();
+      renderNavigation();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      els.summaryCard.focus({ preventScroll: true });
+    }
+
+    function resetQuiz() {
+      const { answered } = getStats();
+      if (answered > 0 && !window.confirm("Bạn có chắc muốn xóa toàn bộ đáp án và làm lại từ đầu?")) return;
+      answers = Array(questions.length).fill(null);
+      current = 0;
+      showQuiz();
+      els.liveRegion.textContent = "Đề thi đã được đặt lại.";
+    }
+
+    els.prevBtn.addEventListener("click", () => {
+      if (current > 0) {
+        current -= 1;
+        showQuiz();
+      }
+    });
+
+    els.nextBtn.addEventListener("click", () => {
+      if (current < questions.length - 1) {
+        current += 1;
+        showQuiz();
+      } else {
+        showSummary();
+      }
+    });
+
+    els.backToQuiz.addEventListener("click", showQuiz);
+    els.resetSidebar.addEventListener("click", resetQuiz);
+    els.resetSummary.addEventListener("click", resetQuiz);
+
+    function registerWebMcpTools() {
+      const context = document.modelContext;
+      if (!context?.registerTool) return;
+      const lifecycle = new AbortController();
+      const register = tool => {
+        try {
+          void Promise.resolve(context.registerTool(tool, { signal: lifecycle.signal }))
+            .catch(error => console.warn("Không thể đăng ký công cụ WebMCP:", error));
+        } catch (error) {
+          console.warn("Không thể đăng ký công cụ WebMCP:", error);
+        }
+      };
+
+      register({
+        name: "read_quiz_progress",
+        title: "Xem tiến độ bài thi",
+        description: "Đọc số câu đã trả lời, số câu đúng và các câu còn lại trong đề đạo hàm hàm ẩn.",
+        inputSchema: { type: "object", properties: {}, additionalProperties: false },
+        annotations: { readOnlyHint: true, untrustedContentHint: false },
+        execute() {
+          const { answered, score } = getStats();
+          return {
+            answered,
+            score,
+            total: questions.length,
+            unanswered_questions: questions.filter((_, index) => answers[index] === null).map(question => question.id)
+          };
+        }
+      });
+
+      register({
+        name: "open_quiz_question",
+        title: "Mở câu hỏi",
+        description: "Mở một câu từ 1 đến 20 trên giao diện bài thi để người học xem hoặc trả lời.",
+        inputSchema: {
+          type: "object",
+          properties: { question_number: { type: "integer", minimum: 1, maximum: 20 } },
+          required: ["question_number"],
+          additionalProperties: false
+        },
+        annotations: { readOnlyHint: false, untrustedContentHint: false },
+        execute(input) {
+          const number = Number(input?.question_number);
+          if (!Number.isInteger(number) || number < 1 || number > questions.length) {
+            throw new Error("question_number phải là số nguyên từ 1 đến 20.");
+          }
+          current = number - 1;
+          showQuiz();
+          return { opened_question: number, answered: answers[current] !== null };
+        }
+      });
+
+      register({
+        name: "answer_quiz_question",
+        title: "Trả lời câu hỏi",
+        description: "Chọn một phương án A, B, C hoặc D cho một câu chưa trả lời và hiển thị phản hồi trên giao diện.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            question_number: { type: "integer", minimum: 1, maximum: 20 },
+            option: { type: "string", enum: ["A", "B", "C", "D"] }
+          },
+          required: ["question_number", "option"],
+          additionalProperties: false
+        },
+        annotations: { readOnlyHint: false, untrustedContentHint: false },
+        execute(input) {
+          const number = Number(input?.question_number);
+          const option = String(input?.option || "").toUpperCase();
+          if (!Number.isInteger(number) || number < 1 || number > questions.length) {
+            throw new Error("question_number phải là số nguyên từ 1 đến 20.");
+          }
+          if (!letters.includes(option)) {
+            throw new Error("option phải là A, B, C hoặc D.");
+          }
+          const index = number - 1;
+          if (answers[index] !== null) {
+            throw new Error(`Câu ${number} đã được trả lời và bị khóa.`);
+          }
+          current = index;
+          showQuiz();
+          const optionIndex = letters.indexOf(option);
+          selectAnswer(optionIndex);
+          const { answered, score } = getStats();
+          return {
+            question_number: number,
+            selected_option: option,
+            correct: optionIndex === questions[index].answer,
+            correct_option: letters[questions[index].answer],
+            answered,
+            score
+          };
+        }
+      });
+    }
+
+    renderQuestion();
+    registerWebMcpTools();
+  </script>
+</body>
+</html>
